@@ -1,0 +1,34 @@
+<% extend 'admin/share/layout' %>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section">Loại nông sản</div>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<a class="ui primary button" href="<%= @_url('admin.produce-type.detail', { id: 'new' }) %>">Tạo mới</a>
+
+	<table class="ui celled table">
+		<thead>
+			<tr>
+				<th>Tên</th>
+				<th>Mô tả</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for produceType in @produceTypes : %>
+				<tr>
+					<td>
+						<a href="<%= @_url('admin.produce-type.detail', { id: produceType._id }) %>">
+							<span><%= produceType.name %></span>
+						</a>
+					</td>
+					<td><%= produceType.description %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,62 @@
+<% extend 'admin/share/layout' %>
+
+<%
+	@pageTitle = 'Mẫu nông sản';
+
+	@backUrl = @_url('admin.dashboard');
+
+	createTemplateUrl = @_url('admin.produce.templates.create');
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<div class="ui borderless secondary compact menu">
+		<div class="fitted header item">Tạo mẫu</div>
+		<div class="fitted down item">
+			<a href="<%= createTemplateUrl %>">
+				<i class="circular add icon"></i>
+			</a>
+		</div>
+	</div>
+	<% if @success.length > 0 : %>
+		<div class="ui success message">
+			<i class="close icon"></i>
+			<div class="header"></div>
+			<% for message in @success : %>
+				<p><%= message %></p>
+			<% end %>
+		</div>
+	<% end %>
+	<div class="ui very relaxed divided list">
+		<% if !@produceTemplates.length : %>
+			<div class="item">
+				<div class="content">
+					<span>Bạn chưa có mẫu nông sản nào</span>
+				</div>
+			</div>
+		<% end %>
+		<% for template in @produceTemplates : %>
+			<%
+				detailUrl = @_url('admin.produce.templates.detail', {
+					id: template._id,
+				})
+			%>
+			<div class="item">
+				<i class="large circular leaf middle aligned icon"></i>
+				<div class="middle aligned content">
+					<a href="<%= detailUrl %>"><%= template.name %></a>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
+<% block 'post-body' : %>
+	<script src="/js/produce-tag-detail.js"></script>
+<% end %>

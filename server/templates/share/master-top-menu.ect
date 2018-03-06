@@ -1,0 +1,23 @@
+<div class="ui top fixed menu borderless">
+	<a class="item" href="<%= @_url('landingpage') %>">
+		<img class="ui image mini left" src="/images/logo.png">
+	</a>
+	<a class="item" href="<%= @_url('produce.wizard.1') %>">
+		<span>Chia sẻ nông sản</span>
+	</a>
+	<div class="right menu">
+		<% if @authentication : %>
+			<a class="toc item">
+				<% if @authentication.avatar : %>
+					<img class="ui spaced avatar image" src="<%= @authentication.avatar %>">
+				<% else : %>
+					<img class="ui spaced avatar image" src="/images/logo.png">
+				<% end %>
+			</a>
+		<% else : %>
+			<a class="toc item">
+				<i class="large content icon"></i>
+			</a>
+		<% end %>
+	</div>
+</div>

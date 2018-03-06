@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<link rel="shortcut icon" type="image/png" href="/images/favicon-16.png"/>
+
+		<!-- Css -->
+		<link rel="stylesheet" href="/semantic/dist/semantic.css">
+		<link rel="stylesheet" href="/node_modules/semantic-ui-calendar/dist/calendar.min.css">
+		<link rel="stylesheet" href="/css/device-visibility.css">
+		<link rel="stylesheet" href="/css/utilities.css">
+		<link rel="stylesheet" href="/css/master.css">
+		<% content 'head' %>
+	</head>
+	<body>
+		<!-- Sidebar Menu -->
+		<% include 'share/master-side-menu' %>
+
+		<!-- Page Contents -->
+		<div class="pusher">
+			<!-- Top Menu -->
+			<% include 'share/master-top-menu' %>
+
+			<div class="menu spacer"></div>
+			<!-- Child Contents -->
+			<% content %>
+		</div>
+
+		<!-- Scripts -->
+		<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="/semantic/dist/semantic.js"></script>
+		<script src="/node_modules/semantic-ui-calendar/dist/calendar.min.js"></script>
+		<script src="/js/master-side-menu.js"></script>
+		<% content 'post-body' %>
+	</body>
+</html>

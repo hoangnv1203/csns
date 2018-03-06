@@ -1,0 +1,114 @@
+<%  extend 'admin/share/layout' %>
+<%
+	@pageTitle = @isCreating && 'Tạo danh mục mới' || @produceCategory.name;
+
+	@backUrl = @_url('admin.produce.category.list');
+
+	createAction = @isCreating &&
+		@_url('admin.produce.category.create') ||
+		@_url('admin.produce.category.detail', {
+			prettyUrl: @produceCategory.prettyUrl
+		})
+
+	deleteAction = @_url('admin.produce.category.delete', {
+		prettyUrl: @produceCategory.prettyUrl
+	})
+
+	createProduceTemplateUrl = @_url('admin.produce.template', {
+		prettyUrl: @produceCategory.prettyUrl,
+		id: 'new'
+	})
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.category.list') %>">Danh mục nông sản</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+	<% if !@isCreating : %>
+		<div class="fitted down item">
+			<a class="circular ui icon red button" href="<%= deleteAction %>">
+				<i class="trash outline icon"></i>
+			</a>
+		</div>
+	<% end %>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+	<% if !@isCreating : %>
+		<div class="item">
+			<a href="<%= deleteAction %>">
+				<i class="large trash outline icon"></i>
+			</a>
+		</div>
+	<% end %>
+<% end %>
+
+<div class="ui container">
+	<form class="ui form" id="save-form" method="post" action="<%= createAction %>">
+		<div class="two fields">
+			<div class="required field">
+				<label>Tên danh mục</label>
+				<input type="text" name="name" required
+					value="<%= @produceCategory.name %>">
+			</div>
+			<div class="required field">
+				<label>Đường dẫn</label>
+				<input type="text" name="prettyUrl" required
+					value="<%= @produceCategory.prettyUrl %>">
+			</div>
+		</div>
+		<% include 'admin/share/hidden-submit-button' %>
+	</form>
+
+	<% if !@isCreating : %>
+		<div class="ui borderless secondary menu">
+			<div class="fitted header item">Mẫu nông sản</div>
+			<div class="fitted down item">
+				<a href="<%= createProduceTemplateUrl %>">
+					<i class="circular add icon"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="ui very relaxed divided list">
+			<% if !@produceTemplates.length : %>
+				<div class="item">
+					<div class="content">
+						<span>Bạn chưa có mẫu nông sản nào</span>
+					</div>
+				</div>
+			<% end %>
+			<% for templ in @produceTemplates : %>
+				<%
+					detailUrl = @_url('admin.produce.template', {
+						prettyUrl: @produceCategory.prettyUrl,
+						id: templ._id
+					})
+				%>
+				<div class="item">
+					<i class="large circular leaf middle aligned icon"></i>
+					<div class="middle aligned content">
+						<a href="<%= detailUrl %>"><%= templ.name %></a>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>

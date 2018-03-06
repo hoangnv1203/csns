@@ -1,0 +1,19 @@
+<% extend 'share/master' %>
+
+<div class="ui main">
+	<div class="ui container">
+		<h2 class="ui header">
+			<% if @user.avatar : %>
+				<img class="ui circular image" src="<%= @user.avatar %>">
+			<% else : %>
+				<img class="ui circular image" src="/images/logo.png">
+			<% end %>
+			<div class="content"><%= @user.displayName %></div>
+		</h2>
+		<div class="ui list">
+			<div class="item">
+				<a href="<%= @_url('profile.edit', { id: 'me' }) %>">Thay đổi thông tin</a>
+			</div>
+		</div>
+	</div>
+</div>

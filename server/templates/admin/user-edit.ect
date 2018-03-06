@@ -1,0 +1,198 @@
+<% extend 'admin/share/layout' %>
+<%
+	@pageTitle = @user.displayName;
+
+	@backUrl = @_url('admin.user.list');
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.user.list') %>">Users</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<h2 class="ui header">
+		<img class="ui circular image" src="<%= @user.avatar %>">
+		<div class="content">Thay đổi hồ sơ</div>
+	</h2>
+	<% if @validChangePassword.length > 0 || @success.length > 0 : %>
+		<div class="ui success message">
+			<i class="close icon"></i>
+			<div class="header"></div>
+			<% for message in @success : %>
+				<p><%= message %></p>
+			<% end %>
+			<% for message in @validChangePassword : %>
+				<p><%= message %></p>
+			<% end %>
+		</div>
+	<% end %>
+	<% if @invalidChangePassword.length > 0 : %>
+		<div class="ui error message">
+			<ul class="list">
+				<% for message in @invalidChangePassword : %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<form class="ui form" id="save-form" method="post"
+		action="<%= @_url('admin.user.edit', { id: @user._id }) %>">
+		<!-- Personal Information -->
+		<h4 class="ui dividing header">Thông tin cá nhân</h4>
+		<div class="two fields">
+			<div class="required field">
+				<label>Tên hiển thị</label>
+				<input type="text" name="displayName" placeholder="Nguyễn Văn A."
+					value="<%= @user.displayName %>">
+			</div>
+		</div>
+		<div class="two fields">
+			<div class="field">
+				<label>Số điện thoại</label>
+				<input type="text" name="phoneNumber" placeholder="0123456789"
+					value="<%= @user.phoneNumber %>">
+			</div>
+			<!-- Phone number verification -->
+			<!-- <div class="field">
+				<label>&nbsp;</label>
+				<button class="ui button" type="button">Xác nhận</button>
+			</div> -->
+		</div>
+		<div class="field">
+			<label>Địa chỉ</label>
+			<input type="text" name="address" placeholder="Số nhà X, đường Y" value="<%= @user.address %>">
+		</div>
+		<div class="two fields">
+			<input type="hidden" id="city-has-save" value="<%= @user.city %>">
+			<input type="hidden" id="district-has-save" value="<%= @user.district %>">
+			<div class="field">
+				<label>Thành phố</label>
+				<div id="city" class="ui fluid search selection dropdown">
+					<input id="city-value" type="hidden" name="city">
+					<i class="dropdown icon"></i>
+					<div class="default text">Chọn thành phố</div>
+					<div class="menu">
+						<% for city in @cities : %>
+							<div class="item" data-value="<%= city.name %>"><%= city.name %></div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label>Quận/Huyện</label>
+				<div id="district" class="ui fluid search selection dropdown">
+					<input type="hidden" name="district">
+					<i class="dropdown icon"></i>
+					<div class="default text">Chọn quận/huyện</div>
+					<div class="menu" id="districts">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--
+		<div class="field">
+			<label>Giới thiệu ngắn<label>
+			<textarea rows="2"></textarea>
+		</div>
+		-->
+
+		<h4 class="ui dividing header">Thông tin đăng nhập</h4>
+		<div class="field">
+			<label>Email</label>
+			<input type="text" name="email" placeholder="name@example.com" value="<%= @user.email %>">
+		</div>
+		<div class="field">
+			<label>Tài khoản liên kết</label>
+			<div class="ui list">
+				<% for account in @user.accounts : %>
+					<% if account.provider == 'facebook' : %>
+						<div class="item">
+							<a target="_blank" href="https://facebook.com/<%= account.uid %>">
+								<i class="facebook f icon"></i>
+								<span>Facebook</span>
+							</a>
+						</div>
+					<% else if account.provider == 'google' : %>
+						<div class="item">
+							<a href="#">
+								<i class="google icon"></i>
+								<span>Google</span>
+							</a>
+						</div>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+
+		<h4 class="ui dividing header">Mật khẩu</h4>
+		<% if @isHasLocalAcount : %>
+			<div class="two fields">
+				<div class="field">
+					<label>Mật khẩu hiện tại <i class="info circle icon" title="Không cần nhập trong lần đầu tiên tạo mật khẩu"></i></label>
+					<input type="password" name="oldPassword">
+				</div>
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<label>Mật khẩu mới</label>
+					<input type="password" name="password">
+				</div>
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<label>Nhập lại mật khẩu</label>
+					<input type="password" name="confirmPassword">
+				</div>
+			</div>
+		<% else : %>
+			<div class="two fields">
+				<div class="field">
+					<label>Nhập mật khẩu</label>
+					<input type="password" name="password">
+				</div>
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<label>Nhập lại mật khẩu</label>
+					<input type="password" name="confirmPassword">
+				</div>
+			</div>
+		<% end %>
+		<div class="ui checkbox">
+			<input type="checkbox" name="isBlocked" id="block"
+				<% if @user.isBlocked : %>
+					checked
+				<% end %>
+			>
+			<label for="block">Chặn tài khoản không cho đăng nhập</label>
+		</div>
+	</form>
+</div>
+<% block 'post-body' : %>
+	<script>
+		window.LOCATION_DATA = <%- JSON.stringify(@cities) %>;
+	</script>
+	<script src="/js/profile-edit.js"></script>
+<% end %>

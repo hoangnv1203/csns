@@ -1,0 +1,47 @@
+<% extend 'admin/share/layout' %>
+
+<%
+	@pageTitle = 'Tags';
+
+	@backUrl = @_url('admin.produce.tags.list');
+
+	createAction = @_url('admin.produce.tags.create');
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.tags.list') %>"><%= @pageTitle %></a>
+		<i class="right angle icon divider"></i>
+		<div class="active section">Tạo tag</div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<form class="ui form" id="save-form" method="post" action="<%= createAction %>">
+		<div class="field">
+			<div class="required field">
+				<label>Tên tag</label>
+				<input type="text" name="name" required
+					value="">
+			</div>
+		</div>
+	</form>
+</div>

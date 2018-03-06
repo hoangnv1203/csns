@@ -1,0 +1,50 @@
+<% extend 'share/master' %>
+
+<form method="post" class="ui form"
+	action="<%= @produce._id && @_url('produce.edit', { id: @produce._id }) || @_url('produce.list') %>">
+	<div class="field">
+		<label>Loại nông sản</label>
+		<select name="produceType" class="ui dropdown">
+			<option>---</option>
+			<% for produceType in @produceTypes : %>
+				<% if @produce.compareProduceType(produceType._id) : %>
+					<option value="<%= produceType._id %>" selected><%= produceType.name %></option>
+				<% else : %>
+					<option value="<%= produceType._id %>"><%= produceType.name %></option>
+				<% end %>
+			<% end %>
+		</select>
+	</div>
+	<!-- <div class="field">
+		<div class="ui checkbox">
+			<input type="checkbox">
+			<label>Không tim thấy loại nông sản phù hợp?</label>
+		</div>
+	</div> -->
+	<div class="field">
+		<label>Loại nông sản khác (bỏ qua nếu đã chọn được loại nông sản ở trên)</label>
+		<input type="text" name="produceTypeUnclassified">
+	</div>
+	<div class="field">
+		<label>Mô tả ngắn</label>
+		<input type="text" name="shortDescription" placeholder="Mô tả ngắn"
+			value="<%= @produce.shortDescription %>">
+	</div>
+	<div class="field">
+		<label>Mô tả chi tiết nông sản</label>
+		<input type="text" name="description" placeholder="Mô tả nông sản" value="<%= @produce.description %>">
+	</div>
+	<div class="field">
+		<label>Số điện thoại</label>
+		<input type="text" disabled="disabled"
+			value="<%= @user.phoneNumber %>">
+	</div>
+	<div class="field">
+		<label>Địa chỉ</label>
+		<input type="text" placeholder="Nhập địa chỉ" value="<%= @user.address %>">
+	</div>
+	<button class="ui primary button" type="submit">Lưu thông tin</button>
+	<% if @produce._id : %>
+		<a class="ui gray button" href="<%= @_url('produce.detail', { id: @produce._id }) %>">Quay lại</a>
+	<% end %>
+</form>

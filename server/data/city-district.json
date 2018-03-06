@@ -1,0 +1,36 @@
+[
+	{
+		"name": "Hà Nội",
+		"district": [
+			{
+				"name": "Cầu Giấy"
+			}, {
+				"name": "Ba Đình"
+			}, {
+				"name": "Hoàn Kiếm"
+			}
+		]
+	}, {
+		"name": "Tuyên Quang",
+		"district": [
+			{
+				"name": "Hàm Yên"
+			}, {
+				"name": "Chiêm Hóa"
+			}, {
+				"name": "Yên Sơn"
+			}
+		]
+	}, {
+		"name": "Bắc Ninh",
+		"district": [
+			{
+				"name": "Yên Phong"
+			}, {
+				"name": "Quế Võ"
+			}, {
+				"name": "Từ Sơn"
+			}
+		]
+	}
+]

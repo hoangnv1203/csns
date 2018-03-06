@@ -1,0 +1,121 @@
+<% extend 'share/master' %>
+
+<h1 class="ui">Hồ sơ cá nhân</h1>
+<% if !@isEdit : %>
+	<a class="ui white" href="<%= @_url('user.profile.edit') %>">
+		<button class="ui green button">Chỉnh sửa hồ sơ cá nhân</button>
+	</a>
+<% end %>
+<br>
+<br>
+<img src="<%= @user.avatar %>">
+<div class="ui list">
+	<div class="item">
+		<div class="content">
+			<p><%= @user.displayName %></p>
+		</div>
+	</div>
+	<% if @user.email : %>
+		<div class="item">
+			<i class="mail icon"></i>
+			<div class="content">
+				<span><%= @user.email %></span>
+			</div>
+		</div>
+	<% end %>
+	<br>
+	<% if @isEdit : %>
+		<form class="ui large form" action="<%= @_url('user.profile') %>" method="POST">
+			<div class="field">
+				<div class="ui left icon input">
+					<i class="icon green phone"></i>
+					<input type="number" name="phoneNumber" value="<%= @user.phoneNumber %>">
+				</div>
+			</div>
+			<div class="field">
+				<div class="ui left icon input">
+					<i class="icon red marker"></i>
+					<input type="text" name="address" value="<%= @user.address %>">
+				</div>
+			</div>
+			<div class="two fields">
+				<% for city in @citiesDistricts.cities : %>
+					<input id="citiesDistricts-<%= city.replace(/ /g,'-') %>" type="hidden" value="<%= @citiesDistricts.districts[city] %>">
+					<% if @user.city == city : %>
+						<input id="city-has-choose" type="hidden" value="<%= @citiesDistricts.districts[city] %>">
+						<input id="district-has-choose" type="hidden" value="<%= @user.district %>">
+					<% end %>
+				<% end %>
+				<div class="field">
+					<label>Tỉnh/Thành phố</label>
+					<select id="city" name="city" class="ui dropdown">
+						<option value="">Tỉnh/Thành phố</option>
+						<% for city in @citiesDistricts.cities : %>
+							<% if @user.city == city : %>
+								<option value="<%= city %>" selected><%= city %></option>
+							<% else : %>
+								<option value="<%= city %>"><%= city %></option>
+							<% end %>
+						<% end %>
+					</select>
+				</div>
+				<div class="field">
+					<label>Quận/Huyện</label>
+					<select id="district" name="district" class="ui dropdown">
+						<option value="">Quận/Huyện</option>
+						<% for district in @citiesDistricts.districts : %>
+							<option value="district"><%= district %></option>
+						<% end %>
+					</select>
+				</div>
+			</div>
+			<button class="ui green button" type="submit">Cập nhật</button>
+		</form>
+	<% else : %>
+		<div class="item">
+			<i class="phone green icon"></i>
+			<div class="content inline field">
+				<span><%= @user.phoneNumber %></span>
+				<% if @user.phoneVerified : %>
+					<div class="ui left pointing green basic label">
+						<span>Đã được xác nhận!</span>
+					</div>
+				<% else : %>
+					<div class="ui left pointing red basic label">
+						<span>Chưa được xác nhận!</span>
+					</div>
+					<br>
+					<br>
+					<!-- <button id="verify-phone" class="ui small red button">Xác nhận số điện thoại</button> -->
+					<% if @user.phoneNumber : %>
+						<a href="<%= @_url('user.profile.phone.verify') %>" class="ui small red button">Xác nhận số điện thoại</a>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="item">
+			<i class="marker red icon"></i>
+			<div class="content">
+				<span><%= @user.address %></span>
+				<div class="ui left pointing red basic label">
+					<span>Chưa được xác nhận!</span>
+				</div>
+			</div>
+		</div>
+		<div class="ui large form">
+			<div class="two fields">
+				<div class="field">
+					<label>Tỉnh/Thành phố</label>
+					<span><%= @user.city %></span>
+				</div>
+				<div class="field">
+					<label>Quận/Huyện</label>
+					<span><%= @user.district %></span>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
+<% block 'post-body' : %>
+	<script src="/js/select-city-district.js"></script>
+<% end %>

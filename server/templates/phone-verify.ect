@@ -1,0 +1,40 @@
+<% extend 'share/master' %>
+
+<% block 'head': %>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<link rel="stylesheet" type="text/css" href="/css/recaptcha.css">
+<% end %>
+
+<h1 class="ui">Xác nhận số điện thoại</h1>
+<div class="image content">
+	<div class="description">
+		<p>Sau khi yêu cầu mã xác thực sẽ mất một khoảng thời gian để hệ thống gửi mã xác thực vào số điện thoại của bạn. </p>
+		<p>Mã xác thực chỉ hợp lệ trong thời gian 5 phút.</p>
+		<div class="field">
+			<form action="<%= @_url('user.profile.phone.verify') %>" method="POST">
+
+				<% include 'share/recaptcha' %>
+
+				<input type="hidden" name="getPhoneCode" value="true">
+				<button class="ui small green button">Lấy mã xác nhận</button>
+			</form>
+		</div>
+		<br>
+		<div class="field">
+			<form action="<%= @_url('user.profile.phone.verify') %>" method="POST">
+				<div class="ui fluid left icon input">
+					<i class="icon red marker"></i>
+					<input type="text" name="phoneCode" placeholder="Nhập mã xác nhận">
+				</div>
+				<br>
+				<a class="ui black deny button" href="<%= @_url('user.profile') %>">Quay lại</a>
+				<button type="submit" class="ui button positive right labeled checkmark icon" href="<%= @_url('user.profile') %>">Xác nhận<i class="checkmark icon"></i></button>
+				<% if @storage.invalidPhoneVerified : %>
+					<div class="ui left pointing red basic label">
+						<span>Chưa xác nhận thành công, vui lòng xác nhận lại!</span>
+					</div>
+				<% end %>
+			</form>
+		</div>
+	</div>
+</div>

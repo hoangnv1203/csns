@@ -1,0 +1,49 @@
+{
+	"port": 3000,
+	"development": true,
+	"aws": {
+		"sns": {
+			"region": "ap-southeast-1"
+		},
+		"credentials": {
+			"accessKeyId": "AKIAI6ENA23WUQ7VWOXA",
+			"secretAccessKey": "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"
+		}
+	},
+	"mongodb": {
+		"host": "mongodb://localhost/chiasenongsan-dev"
+	},
+	"oauth": {
+		"google": {
+			"clientId": "65665606345-2mu99l86s2aek5bfhula2qi44df164c4.apps.googleusercontent.com",
+			"clientSecret": "XM7nCqjswPLqo0XjOp_BGttv",
+			"callbackUrl": "http://example.com:3000/oauth/google/callback"
+		},
+		"facebook": {
+			"clientId": "569192903270859",
+			"clientSecret": "48a7c81e5959db5926ea541d7459a283",
+			"callbackUrl": "http://example.com:3000/oauth/fb/callback"
+		}
+	},
+	"googleMapApiKey": "AIzaSyD711rZPGiCnhPiWanhrYFcErZmPgMMf24",
+	"admins": [
+		"d@dapps.me",
+		"d@makegoodlife.org",
+		"hoang.nong.nv@gmail.com"
+	],
+	"cookie": {
+		"secret": "abcxyz",
+		"secure": false
+	},
+	"session": {
+		"name": "fc.sid",
+		"maxAge": 30000000,
+		"sessionKeyError": "session:error",
+		"verifyCode": 300000
+	},
+	"recaptcha": {
+		"siteKey": "6LckSx4UAAAAAJ86D4MlfFCj0kQqMViL_VEyPB5E",
+		"secretKey": "6LckSx4UAAAAALK-hoQn_3Covc2im3_aj73DzBcU"
+	},
+	"saltRounds": 10
+}

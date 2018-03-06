@@ -1,0 +1,14 @@
+<% extend 'admin/share/layout' %>
+<%
+	@pageTitle = 'Bảng quản trị';
+
+	produceCategoryUrl = @_url('admin.produce.category.list');
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>

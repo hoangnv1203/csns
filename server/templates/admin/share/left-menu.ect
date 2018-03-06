@@ -1,0 +1,56 @@
+<div class="item">
+	<div class="ui tiny circular image">
+		<% if @authentication.avatar : %>
+			<img title="<%= @authentication.displayName %>" src="<%= @authentication.avatar %>">
+		<% else : %>
+			<i class="user huge icon"></i>
+		<% end %>
+	</div>
+	<!-- <strong><%= @authentication.displayName %></strong> -->
+</div>
+<a class="item" href="<%= @_url('landingpage')%>">
+	<i class="home icon"></i>
+	<span>Trang chủ</span>
+</a>
+
+<a class="item" href="<%= @_url('admin.dashboard')%>">
+	<i class="grid layout icon"></i>
+	<span>Bảng quản trị</span>
+</a>
+<div class="item">
+	<div class="menu">
+		<a class="item" href="<%= @_url('admin.produce.tags.list')%>">
+			<i class="tags icon"></i>
+			<span>Tags</span>
+		</a>
+		<a class="item" href="<%= @_url('admin.produce.templates.list')%>">
+			<i class="leaf icon"></i>
+			<span>Mẫu nông sản</span>
+		</a>
+		<a class="item" href="<%= @_url('admin.produce.category.list')%>">
+			<i class="tags icon"></i>
+			<span>Danh mục nông sản</span>
+		</a>
+		<a class="item" href="#">
+			<i class="spy icon"></i>
+			<span>Quản trị viên</span>
+		</a>
+		<a class="item" href="<%= @_url('admin.user.list')%>">
+			<i class="user icon"></i>
+			<span>Người dùng</span>
+		</a>
+		<a class="item" href="#">
+			<i class="shipping icon"></i>
+			<span>Giao dịch</span>
+		</a>
+		<a class="item" href="#">
+			<i class="setting icon"></i>
+			<span>Cấu hình</span>
+		</a>
+	</div>
+</div>
+
+<a class="item" href="<%= @_url('signout') %>">
+	<i class="sign out icon"></i>
+	<span>Thoát</span>
+</a>

@@ -1,0 +1,249 @@
+<% extend 'share/master' %>
+
+<div class="ui main">
+	<div class="ui container">
+		<div class="ui ordered mini steps mobile hidden">
+			<div class="completed step">
+				<div class="content">
+					<div class="title">Chuẩn bị</div>
+					<div class="description">Tham gia chiasenongsan.com</div>
+				</div>
+			</div>
+			<div class="completed step">
+				<div class="content">
+					<div class="title">Bắt đầu chia sẻ</div>
+					<div class="description">Chọn danh mục nông sản</div>
+				</div>
+			</div>
+			<div class="step">
+				<div class="content">
+					<div class="title">Mô tả nông sản</div>
+					<div class="description">Điền thông tin chi tiết</div>
+				</div>
+			</div>
+			<div class="step">
+				<div class="content">
+					<div class="title">Xác nhận</div>
+					<div class="description">Kiểm tra lần cuối</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mobile only">
+			<div class="ui sub header">
+				<span>Mô tả nông sản</span>
+			</div>
+			<span>Điền thông tin chi tiết</span>
+		</div>
+
+		<div class="ui hidden divider"></div>
+
+		<form class="ui form" method="post" action="<%= @_url('produce.wizard.2') %>">
+			<input type="hidden" name="w" value="<%= @wizardId %>">
+			<h4 class="ui dividing header">Thông tin nông sản</h4>
+			<div class="required field">
+				<label>Mô tả</label>
+				<input type="text" name="desc" value="<%= @produce.desc%>">
+			</div>
+			<div class="two fields">
+				<div class="required field">
+					<label>Xuất xứ</label>
+					<input type="text" name="origin" value="<%= @produce.origin %>">
+				</div>
+				<div class="required field">
+					<label>Ngày thu hoạch</label>
+					<div class="ui calendar" id="harverst-time-datepicker">
+						<div class="ui input left icon">
+							<i class="calendar icon"></i>
+							<input type="text" name="harvestTime"
+								value="<%= @_formatDate(@produce.harvestTime, 'DD/MM/YYYY') %>">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="two fields">
+				<div class="field">
+					<label>Giá (nếu có)</label>
+					<input type="text" name="price" value="<%= @produce.price %>">
+				</div>
+				<div class="field">
+					<label>Số lượng (nếu có)</label>
+					<input type="text" name="amount" value="<%= @produce.amount %>">
+				</div>
+			</div>
+			<div class="field">
+				<label>Hình ảnh</label>
+				<div class="ui blurring segment">
+					<div class="ui active dimmer">
+						<div class="content">
+							<div class="center">
+								<div class="ui container">
+									<h4 class="ui inverted header">
+										Chức năng hình ảnh đang được phát triển
+									</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="ui tiny image">
+						<img src="/images/produce-sample-draw.jpg">
+					</div>
+					<div class="ui tiny image">
+						<img src="/images/produce-sample-draw.jpg">
+					</div>
+					<div class="ui tiny image">
+						<img src="/images/produce-sample-draw.jpg">
+					</div>
+				</div>
+			</div>
+			<h4 class="ui dividing header">Thông tin liên hệ</h4>
+			<div class="two fields">
+				<div class="field">
+					<label>Số điện thoại</label>
+					<input type="text" readonly value="<%= @produce.phoneNumber %>">
+				</div>
+				<div class="field">
+					<label>Email</label>
+					<input type="text" readonly value="<%= @produce.email %>">
+				</div>
+			</div>
+			<div class="required field">
+				<label>Địa chỉ liên hệ</label>
+				<input type="text" name="address" value="<%= @produce.address %>">
+			</div>
+			<div class="two fields">
+				<div class="required field">
+					<label>Thành phố</label>
+					<div id="city-selection" class="ui fluid search selection dropdown">
+						<input id="city-value" type="hidden" name="city" value="<%= @produce.city %>">
+						<i class="dropdown icon"></i>
+						<div class="default text">Chọn thành phố</div>
+						<div class="menu">
+						</div>
+					</div>
+				</div>
+				<div class="required field">
+					<label>Quận/Huyện</label>
+					<div id="district-selection" class="ui fluid search selection dropdown">
+						<input type="hidden" name="district" value="<%= @produce.district %>">
+						<i class="dropdown icon"></i>
+						<div class="default text">Chọn quận/huyện</div>
+						<div class="menu" id="districts">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui hidden divider"></div>
+			<button class="ui button" type="submit" name="action" value="back">Quay lại</button>
+			<button class="ui primary button right floated" type="submit" name="action" value="next">Đăng tin</button>
+		</form>
+	</div>
+</div>
+
+<% block 'post-body' : %>
+	<script id="produce-template-options" type="x-tmpl-mustache">
+		{{#templates}}
+			<div class="item" data-value="{{_id}}">
+				<span>{{name}}</span>
+			</div>
+		{{/templates}}
+	</script>
+	<script>
+	<!--
+		window.CITIES = <%- JSON.stringify(@cities) %>;
+	-->
+	</script>
+	<script src="/node_modules/mustache/mustache.min.js"></script>
+	<!--<script src="/js/produce-wizard-1.js"></script>-->
+	<script id="city-options" type="x-tmpl-mustache">
+		{{#cities}}
+			<div class="item" data-value="{{name}}">
+				<span>{{name}}</span>
+			</div>
+		{{/cities}}
+	</script>
+	<script id="district-options" type="x-tmpl-mustache">
+		{{#districts}}
+			<div class="item" data-value="{{name}}">
+				<span>{{name}}</span>
+			</div>
+		{{/districts}}
+	</script>
+	<script>
+		;(function() {
+			var ID_NAME = {};
+			var CITY_TEMP = $('#city-options').html();
+			var DISTRICT_TEMP = $('#district-options').html();
+
+			Mustache.parse(CITY_TEMP);
+			Mustache.parse(DISTRICT_TEMP);
+
+			$(document).ready(function() {
+				for (var i = 0; i < CITIES.length; i++) {
+					ID_NAME[CITIES[i].name] = CITIES[i];
+				}
+
+				var cityOptions = Mustache.render(CITY_TEMP, {
+					cities: CITIES
+				});
+
+				$('#city-selection .menu').html(cityOptions);
+
+				$('#city-selection').dropdown({
+					allowAdditions: true,
+					onChange: function() {
+						populateDistricts();
+
+						$('#district-selection').dropdown('clear');
+					}
+				});
+
+				$('#city-selection').dropdown('set selected', $('#city-selection input').val());
+
+				populateDistricts();
+
+				$('#district-selection').dropdown({
+					allowAdditions: true
+				});
+
+				// datepicker
+				$('#harverst-time-datepicker').calendar({
+					type: 'date',
+					formatter: {
+						date: function(date, settings) {
+							if (!date) return '';
+
+							var day = date.getDate();
+							var month = date.getMonth() + 1;
+							var year = date.getFullYear();
+
+							return [
+								(day + 100).toString().substr(1, 2),
+								(month + 100).toString().substr(1, 2),
+								year
+							].join('/');
+						}
+					}
+				});
+			});
+
+			function populateDistricts() {
+				var selectedCity = $('#city-selection').dropdown('get value');
+
+				var data = ID_NAME[selectedCity];
+
+				if (!data) {
+					return;
+				}
+
+				var districtOptions = Mustache.render(DISTRICT_TEMP, {
+					districts: data.district
+				});
+
+				$('#district-selection .menu').html(districtOptions);
+
+				$('#district-selection').dropdown('refresh');
+			}
+		})();
+	</script>
+<% end %>

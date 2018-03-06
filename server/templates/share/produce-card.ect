@@ -1,0 +1,56 @@
+<a class="ui centered link card" href="<%= @_url('produce.detail', { id: @produce._id })%>">
+	<div class="content">
+		<div class="right floated meta">
+			<img class="ui avatar image" src="<%= @produce.seller.avatar %>">
+		</div>
+		<div class="header">
+			<% if @produce.hasUnclassifiedTemplate : %>
+				<span><%= (@produce.unclassifiedTemplate || 'Nông sản khác') %></span>
+			<% else : %>
+				<% if @produce.template : %>
+					<span href="#"><%= @produce.template.name %></span>
+				<% else : %>
+					<span>Nông sản khác</span>
+				<% end %>
+			<% end %>
+		</div>
+		<div class="meta">
+			<% if @produce.hasUnclassifiedCategory : %>
+				<span><%= (@produce.unclassifiedCategory || 'Danh mục khác') %></span>
+			<% else : %>
+				<% if @produce.category : %>
+					<span><%= @produce.category.name %></span>
+				<% else : %>
+					<span>Danh mục khác</span>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="ui slide masked reveal image">
+		<img src="/images/fruit-sample-1.jpg" class="visible content">
+		<img src="/images/fruit-sample-2.jpg" class="hidden content">
+	</div>
+	<div class="content">
+		<div class="description"><%= @produce.desc %></div>
+	</div>
+	<div class="extra content">
+		<div class="right floated meta">
+			<div class="time-ago" data-value="<%= @produce.publishedAt.valueOf() %>"></div>
+		</div>
+		<div class="meta">
+			<div><%= @produce.district %>, <%= @produce.city %></div>
+		</div>
+	</div>
+	<div class="extra content">
+		<% if @produce.harvestTime : %>
+			<div class="meta">
+				<span>Thu hoạch<span>
+				<span class="time-ago" data-value="<%= @produce.harvestTime %>"></span>
+			</div>
+		<% else : %>
+			<div class="meta">
+				<span>Không có thông tin về thời điểm thu hoạch<span>
+			</div>
+		<% end %>
+	</div>
+</a>

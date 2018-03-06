@@ -1,0 +1,106 @@
+body {
+	overflow: scroll;
+}
+
+.ui.sidebar.menu {
+	z-index: 10;
+}
+
+.ui.top.menu {
+	z-index: 2;
+}
+
+.ui.top.menu .header.item > .icon {
+	margin: 0;
+}
+
+.control.menu {
+	position: fixed;
+	left: 210px;
+	right: 0;
+	padding: 1em;
+	padding-bottom: 0;
+	background: white;
+	z-index: 1;
+}
+
+.pusher > .content {
+	margin-top: 70px;
+	margin-left: 210px;
+}
+
+.content > .ui.main {
+	padding: 1em;
+}
+
+.mobile.top.menu > .item {
+	width: 52px;
+}
+
+.mobile.top.menu > .item > .icon {
+	margin: 0;
+}
+
+.mobile.top.menu > .item.page.title {
+	flex-grow: 1;
+}
+
+.mobile.top.menu > .item.page.title > .page.title.content {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 767px) {
+	.pusher > .content {
+		margin-top: 40px;
+		margin-left: 0;
+	}
+
+	.pusher > .content > .ui.main {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.pusher > .content > .header.spacer {
+	margin-top: 115px;
+}
+
+.full.height {
+	display: flex;
+	flex-direction: row;
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+.full.height > .leftmenu {
+	position: relative;
+	z-index: 1;
+	background-color: #1b1c1d;
+	-webkit-box-flex: 0;
+	flex: 0 0 auto;
+}
+
+.full.height > .content {
+	-webkit-box-flex: 1;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+
+
+.full.height > .content > .ui.main {
+	padding: 1em;
+}
+
+.full.height > .content > .ui.main > .ui.admin.menu .ui.breadcrumb {
+	display: block;
+}
+
+/*.full.height > .content > .ui.main > .ui.admin.menu > .control.menu .item {
+	width: auto!important;
+}
+*/

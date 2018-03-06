@@ -1,0 +1,43 @@
+<% extend 'admin/share/layout' %>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section">Users</div>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<div class="fitted down item">
+		<a href="<%= @_url('admin.user.create') %>">
+			<i class="circular add icon"></i>
+		</a>
+	</div>
+	<table class="ui striped table">
+		<thead>
+			<tr>
+				<th>Tên</th>
+				<th>Email</th>
+				<th>Số điện thoại</th>
+				<th>Địa chỉ</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for user in @users : %>
+				<tr>
+					<td><%= user.displayName %></td>
+					<td><%= user.email %></td>
+					<td><%= user.phoneNumber %></td>
+					<td><%= user.address %></td>
+					<td class="center aligned collapsing">
+						<a href="<%= @_url('admin.user.edit', { id: user._id }) %>">
+							<i class="write icon"></i>
+						</a>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

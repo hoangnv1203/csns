@@ -1,0 +1,96 @@
+<% extend 'share/master' %>
+
+<div class="ui main">
+	<div class="ui container">
+		<div class="ui ordered mini steps mobile hidden">
+			<div class="completed step">
+				<div class="content">
+					<div class="title">Chuẩn bị</div>
+					<div class="description">Tham gia chiasenongsan.com</div>
+				</div>
+			</div>
+			<div class="active step">
+				<div class="content">
+					<div class="title">Bắt đầu chia sẻ</div>
+					<div class="description">Chọn danh mục nông sản</div>
+				</div>
+			</div>
+			<div class="step">
+				<div class="content">
+					<div class="title">Mô tả nông sản</div>
+					<div class="description">Điền thông tin chi tiết</div>
+				</div>
+			</div>
+			<div class="step">
+				<div class="content">
+					<div class="title">Xác nhận</div>
+					<div class="description">Kiểm tra lần cuối</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mobile only">
+			<div class="ui sub header">
+				<span>Bắt đầu chia sẻ</span>
+			</div>
+			<span>Chọn danh mục nông sản</span>
+		</div>
+
+		<div class="ui hidden divider"></div>
+
+		<form class="ui form" method="post" action="<%= @_url('produce.wizard.1') %>">
+			<input type="hidden" name="w" value="<%= @wizardId %>">
+			<h4 class="ui dividing header">Phân loại</h4>
+			<div class="two fields">
+				<div class="field">
+					<label>Danh mục</label>
+					<div id="produce-category-selection" class="ui fluid search selection dropdown">
+						<input type="hidden" name="category" value="<%= @produce.category %>">
+						<i class="dropdown icon"></i>
+						<div class="default text">Chọn danh mục</div>
+						<div class="menu">
+							<% for cat in @produceCategories : %>
+								<div class="item" data-value="<%= cat._id %>"><%= cat.name %></div>
+							<% end %>
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<label>Nông sản</label>
+					<div id="produce-template-selection" class="ui fluid search selection dropdown">
+						<input type="hidden" name="template" value="<%= @produce.template %>">
+						<i class="dropdown icon"></i>
+						<div class="default text">Chọn nông sản</div>
+						<div class="menu">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui hidden divider"></div>
+			<a class="ui button" type="button" href="<%= @_url('landingpage') %>">
+				Quay lại
+			</a>
+			<button class="ui primary button right floated" type="submit">
+				Tiếp tục
+			</button>
+		</form>
+	</div>
+</div>
+
+<% block 'post-body' : %>
+	<script id="produce-template-options" type="x-tmpl-mustache">
+		{{#templates}}
+			<div class="item" data-value="{{_id}}">
+				<span>{{name}}</span>
+			</div>
+		{{/templates}}
+	</script>
+	<script>
+	<!--
+		window.CATS = <%- JSON.stringify(@produceCategories) %>;
+		window.TEMPS = <%- JSON.stringify(@produceTemplates) %>;
+	-->
+	</script>
+	<script src="/node_modules/mustache/mustache.min.js"></script>
+	<script src="/js/produce-wizard-1.js"></script>
+<% end %>

@@ -1,0 +1,9 @@
+<% if @storage.invalidRecaptcha : %>
+<div class="recaptcha-error">
+	<div class="g-recaptcha" data-sitekey="6LckSx4UAAAAAJ86D4MlfFCj0kQqMViL_VEyPB5E"></div>
+	<div class="recaptcha-error-message">Vui lòng xác minh rằng bạn không phải robot.</div>
+</div>
+<% else : %>
+	<div class="g-recaptcha" data-sitekey="6LckSx4UAAAAAJ86D4MlfFCj0kQqMViL_VEyPB5E"></div>
+<% end %>
+<br>

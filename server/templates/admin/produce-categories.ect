@@ -1,0 +1,52 @@
+<% extend 'admin/share/layout' %>
+
+<%
+	@pageTitle = 'Danh mục nông sản';
+
+	@backUrl = @_url('admin.dashboard');
+
+	createProduceCategoryUrl = @_url('admin.produce.category.detail', 'create')
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<div class="ui borderless secondary compact menu">
+		<div class="fitted header item">Mẫu nông sản</div>
+		<div class="fitted down item">
+			<a href="<%= createProduceCategoryUrl %>">
+				<i class="circular add icon"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="ui very relaxed divided list">
+		<% if !@produceCategories.length : %>
+			<div class="item">
+				<div class="content">
+					<span>Bạn chưa có danh mục nông sản nào</span>
+				</div>
+			</div>
+		<% end %>
+		<% for cat in @produceCategories : %>
+			<%
+				detailUrl = @_url('admin.produce.category.detail', {
+					prettyUrl: cat.prettyUrl,
+				})
+			%>
+			<div class="item">
+				<i class="large circular tag middle aligned icon"></i>
+				<div class="middle aligned content">
+					<a href="<%= detailUrl %>"><%= cat.name %></a>
+					<div class="description"><%= cat.prettyUrl %></div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

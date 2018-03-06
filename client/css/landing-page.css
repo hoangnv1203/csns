@@ -1,0 +1,12 @@
+.illustration.art {
+	height: 20em;
+	background-image: url('/images/lp.jpg');
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	box-shadow: 0px 1px 3px 0px #D4D4D5, 0px 0px 0px 1px #D4D4D5;
+}
+
+.ui.main > .ui.cards > .ui.link.card:hover {
+	-webkit-transform:  translateY(0);
+	transform:  translateY(0);
+}

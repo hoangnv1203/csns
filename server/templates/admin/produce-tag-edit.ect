@@ -1,0 +1,75 @@
+<% extend 'admin/share/layout' %>
+
+<%
+	@pageTitle = 'Tags';
+
+	@backUrl = @_url('admin.produce.tags.list');
+
+	updateAction = @_url('admin.produce.tags.detail', {
+		id: @tag._id
+	});
+
+	deleteAction = @_url('admin.produce.tags.delete', {
+		id: @tag._id
+	});
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.tags.list') %>"><%= @pageTitle %></a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @tag.name %></div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+	<div class="fitted down item">
+		<a class="circular ui icon red button" href="<%= deleteAction %>">
+			<i class="trash outline icon"></i>
+		</a>
+	</div>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+	<div class="item">
+		<a href="<%= deleteAction %>">
+			<i class="large trash outline icon"></i>
+		</a>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<% if @success.length > 0 : %>
+		<div class="ui success message">
+			<i class="close icon"></i>
+			<div class="header"></div>
+			<% for message in @success : %>
+				<p><%= message %></p>
+			<% end %>
+		</div>
+	<% end %>
+	<form class="ui form" id="save-form" method="post" action="<%= updateAction %>">
+		<div class="field">
+			<div class="required field">
+				<label>Tên tag</label>
+				<input type="text" name="name" required
+					value="<%= @tag.name %>">
+			</div>
+		</div>
+	</form>
+</div>
+<% block 'post-body' : %>
+	<script src="/js/produce-tag-detail.js"></script>
+<% end %>

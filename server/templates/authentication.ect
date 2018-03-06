@@ -1,0 +1,49 @@
+<% extend 'share/master' %>
+
+<div class="ui main">
+	<div class="ui text container">
+		<h3 class="ui center aligned header">
+			<img src="images/logo.png" class="image">
+			<div class="content">
+				Đăng nhập
+			</div>
+		</h3>
+		<form class="ui large form authentication" method="post" action="<%= @_url('authentication') %>">
+			<div class="ui segment">
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="user icon"></i>
+						<input type="text" name="email" placeholder="E-mail address">
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui left icon input">
+						<i class="lock icon"></i>
+						<input type="password" name="password" placeholder="Password">
+					</div>
+				</div>
+				<button class="ui fluid large teal submit button">Đăng nhập</button>
+			</div>
+			<div class="ui error message"></div>
+		</form>
+		<% if @loginError.length > 0 : %>
+			<div class="ui error message">
+				<ul class="list">
+					<% for message in @loginError : %>
+						<li><%= message %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+		<br>
+		<div class="ui">
+			<a href="<%= @_url('oauth.fb') %>" class="ui fluid large facebook button">
+				<i class="facebook icon"></i>
+				<span>Đăng nhập bằng Facebook</span>
+			</a>
+		</div>
+	</div>
+</div>
+<% block 'post-body' : %>
+	<script src="/js/authentication.js"></script>
+<% end %>

@@ -1,0 +1,94 @@
+<% extend 'admin/share/layout' %>
+<%
+	@pageTitle = @isCreating && 'Tạo mẫu mới' || @produceTemplate.name
+
+	@backUrl = @_url('admin.produce.category.detail', {
+		prettyUrl: @produceCategory.prettyUrl
+	})
+
+	createAction = @isCreating &&
+		@_url('admin.produce.template.create', {
+			prettyUrl: @produceCategory.prettyUrl
+		}) ||
+		@_url('admin.produce.template', {
+			prettyUrl: @produceCategory.prettyUrl,
+			id: @produceTemplate._id
+		})
+
+	deleteAction = @_url('admin.produce.template.delete', {
+		prettyUrl: @produceCategory.prettyUrl,
+		id: @produceTemplate._id
+	})
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.category.list') %>">Danh mục nông sản</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.category.detail', { prettyUrl: @produceCategory.prettyUrl }) %>"><%= @produceCategory.name %></a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @pageTitle %></div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+	<% if !@isCreating : %>
+		<div class="fitted down item">
+			<a class="circular ui icon red button" href="<%= deleteAction %>">
+				<i class="trash outline icon"></i>
+			</a>
+		</div>
+	<% end %>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+	<% if !@isCreating : %>
+		<div class="item">
+			<a href="<%= deleteAction %>">
+				<i class="large trash outline icon"></i>
+			</a>
+		</div>
+	<% end %>
+<% end %>
+
+<div class="ui container">
+	<form class="ui form" id="save-form" method="post" action="<%= createAction %>">
+		<div class="two fields">
+			<div class="required field">
+				<label>Tên mẫu</label>
+				<input type="text" name="name" required
+					value="<%= @produceTemplate.name %>">
+			</div>
+		</div>
+		<div class="required field">
+			<label>Mô tả</label>
+			<input type="text" name="desc" required
+				value="<%= @produceTemplate.desc %>">
+		</div>
+
+		<div class="field">
+			<label>Hình ảnh</label>
+			<div class="ui basic segment">
+				<div class="ui tiny bordered image">
+					<img src="/images/produce-sample-draw.jpg">
+				</div>
+				<div class="ui tiny bordered image" style="text-align: center;">
+					<i class="big icon plus"></i>
+				</div>
+			</div>
+		</div>
+		<% include 'admin/share/hidden-submit-button' %>
+	</form>
+</div>

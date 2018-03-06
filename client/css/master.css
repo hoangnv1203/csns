@@ -1,0 +1,19 @@
+body {
+	overflow: scroll;
+}
+
+.pusher > .menu.spacer {
+	margin-top: 60px;
+}
+
+.ui.segment .ui.dimmer {
+	z-index: 1;
+}
+.ui.main {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.ui.top.menu .item > .icon {
+	margin: 0;
+}

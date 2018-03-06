@@ -1,0 +1,21 @@
+<div class="ui vertical inverted sidebar menu right uncover">
+	<div class="item">
+		<div class="menu">
+			<a class="active item" href="<%=@_url('landingpage') %>">Trang chủ</a>
+			<a class="item" href="<%=@_url('produce.list') %>">Danh sách nông sản</a>
+			<a class="item">Điều khoản sử dụng</a>
+			<a class="item">Giới thiệu</a>
+		</div>
+	</div>
+	<div class="item">
+		<div class="menu">
+			<% if @authentication : %>
+				<a class="item" href="<%= @_url('profile.view', { id: 'me' }) %>">Hồ sơ cá nhân</a>
+				<a class="item" href="<%= @_url('admin.dashboard') %>">Quản trị hệ thống</a>
+				<a class="item" href="<%= @_url('signout') %>">Đăng xuất</a>
+			<% else : %>
+				<a class="item" href="<%= @_url('authentication') %>">Đăng nhập</a>
+			<% end %>
+		</div>
+	</div>
+</div>

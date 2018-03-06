@@ -1,0 +1,26 @@
+<% extend 'share/master' %>
+
+<div class="ui main">
+	<div class="ui cards">
+		<% for produce in @produces : %>
+			<% include 'share/produce-card', { produce: produce, _url: @_url } %>
+		<% end %>
+	</div>
+</div>
+
+<% block 'post-body' : %>
+	<script src="/node_modules/timeago.js/dist/timeago.min.js"></script>
+	<script src="/node_modules/timeago.js/dist/timeago.locales.min.js"></script>
+	<script>
+		var formater = timeago();
+
+		$(document).ready(function() {
+
+			$('.time-ago').each(function() {
+				var data = $(this).data('value');
+
+				$(this).html(formater.format(data, 'vi'));
+			});
+		})
+	</script>
+<% end %>

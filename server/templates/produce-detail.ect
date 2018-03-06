@@ -1,0 +1,206 @@
+<% extend 'share/master' %>
+
+<% block 'head' : %>
+	<link rel="stylesheet" href="/node_modules/swiper/dist/css/swiper.min.css">
+	<link rel="stylesheet" href="/css/produce-detail.css">
+<% end %>
+
+<div class="produce images">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<div class="ui image">
+					<img src="/images/fruit-sample-1.jpg">
+				</div>
+			</div>
+			<div class="swiper-slide">
+				<div class="ui image">
+					<img src="/images/fruit-sample-2.jpg">
+				</div>
+			</div>
+			<div class="swiper-slide">
+				<div class="ui image">
+					<img src="/images/fruit-sample-3.jpg">
+				</div>
+			</div>
+			<div class="swiper-slide">
+				<div class="ui image">
+					<img src="/images/fruit-sample-4.jpg">
+				</div>
+			</div>
+			<div class="swiper-slide">
+				<div class="ui image">
+					<img src="/images/fruit-sample-5.jpg">
+				</div>
+			</div>
+		</div>
+		 <!-- If we need pagination -->
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+<div class="ui main">
+	<div class="ui container stackable grid">
+		<div class="eight wide column">
+			<div class="ui basic segment">
+				<h3 class="ui header">
+					<% if @produce.hasUnclassifiedTemplate : %>
+						<span><%= (@produce.unclassifiedTemplate || 'Nông sản khác') %></span>
+					<% else : %>
+						<% if @produce.template : %>
+							<span href="#"><%= @produce.template.name %></span>
+						<% else : %>
+							<span>Nông sản khác</span>
+						<% end %>
+					<% end %>
+					<div class="ui price tag label">
+						<% if !@produce.price || @produce.price == '0' : %>
+							<span>Miễn phí</span>
+						<% else : %>
+							<span><%= @produce.price %></span>
+						<% end %>
+					</div>
+				</h3>
+				<div class="ui relaxed list produce info">
+					<div class="item">
+						<i class="large tag middle aligned icon"></i>
+						<div class="content">
+							<div class="header">Danh mục</div>
+							<div class="description">
+								<% if @produce.hasUnclassifiedCategory : %>
+									<span><%= (@produce.unclassifiedCategory || 'Danh mục khác') %></span>
+								<% else : %>
+									<% if @produce.category : %>
+										<span><%= @produce.category.name %></span>
+									<% else : %>
+										<span>Danh mục khác</span>
+									<% end %>
+								<% end %>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="large browser middle aligned icon"></i>
+						<div class="content">
+							<div class="header">Mô tả</div>
+							<div class="description">
+								<span><%= @produce.desc || 'Không có thông tin' %></span>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="large anchor middle aligned icon"></i>
+						<div class="content">
+							<div class="header">Xuất xứ</div>
+							<div class="description">
+								<span><%= @produce.origin || 'Không có thông tin' %></span>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="large shipping middle aligned icon"></i>
+						<div class="content">
+							<div class="header">Thời điểm thu hoạch:</div>
+							<div class="description">
+								<% if @produce.harvestTime : %>
+									<span class="time-ago" data-value="<%= @produce.harvestTime %>"></span>
+								<% else : %>
+									<span>Không có thông tin</span>
+								<% end %>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<i class="large cubes middle aligned icon"></i>
+						<div class="content">
+							<div class="header">Số lượng:</div>
+							<div class="description">
+								<span><%= @produce.amount || 'Không có thông tin' %></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="eight wide column">
+			<div class="ui inverted segment">
+				<div class="clearfix">
+					<div class="ui avatar image">
+						<img src="<%= @produce.seller.avatar %>">
+					</div>
+					<span><%= @produce.seller.displayName %></span>
+				</div>
+				<div class="ui hidden divider"></div>
+				<% if @produce.address : %>
+					<div>
+						<span><%= @produce.address %></span>
+					</div>
+				<% end %>
+				<% if @produce.city || @produce.district : %>
+					<div>
+						<% if @produce.district : %>
+							<span><%= @produce.district %></span>
+							<%= @produce.city && ',' %>
+						<% end %>
+						<% if @produce.city : %>
+							<span><%= @produce.city %></span>
+						<% end %>
+					</div>
+				<% end %>
+				<div class="ui hidden divider"></div>
+				<a class="ui primary button" href="<%= @_url('produce.connect', { id: @produce._id }) %>">Kết nối</a>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<% block 'post-body' : %>
+	<script src="/node_modules/swiper/dist/js/swiper.min.js"></script>
+	<script src="/node_modules/timeago.js/dist/timeago.min.js"></script>
+	<script src="/node_modules/timeago.js/dist/timeago.locales.min.js"></script>
+	<script>
+		var formater = timeago();
+
+		$(document).ready(function() {
+			$('.time-ago').each(function() {
+				var data = $(this).data('value');
+
+				$(this).html(formater.format(data, 'vi'));
+			});
+
+			$('.ui.rating').rating({
+				interactive: false
+			});
+
+			var mySwiper = new Swiper ('.swiper-container', {
+			// Optional parameters
+				direction: 'horizontal',
+				loop: true,
+
+				// If we need pagination
+				pagination: '.swiper-pagination',
+
+				// Navigation arrows
+				nextButton: '.swiper-button-next',
+				prevButton: '.swiper-button-prev',
+
+				// And if we need scrollbar
+				// scrollbar: '.swiper-scrollbar'
+				slidesPerView: 5,
+				spaceBetween: 10,
+				breakpoints: {
+					// when window width is <= 640px
+					640: {
+						slidesPerView: 1,
+						spaceBetween: 30
+					},
+					// when window width is <= 640px
+					770: {
+						slidesPerView: 3,
+						spaceBetween: 30
+					}
+				}
+			});
+		});
+	</script>
+<% end %>

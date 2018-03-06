@@ -1,0 +1,29 @@
+<% extend 'admin/share/layout' %>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section">Admin</a>
+		<i class="right angle icon divider"></i>
+		<div class="section">Loại nông sản</div>
+		<i class="right angle icon divider"></i>
+		<div class="active section">Chỉnh sửa</div>
+	</div>
+<% end %>
+
+<div class="ui container">
+	<form class="ui form" method="post"
+		action="<%= @produceType._id && @_url('admin.produce-type.detail', { id: @produceType._id }) || @_url('admin.produce-type.list') %>">
+		<div class="field">
+			<label>Loại nông sản</label>
+			<input type="text" name="name" placeholder="Loại nông sản"
+				value="<%= @produceType.name %>">
+		</div>
+		<div class="field">
+			<label>Mô tả</label>
+			<input type="text" name="description" placeholder="Mô tả"
+				value="<%= @produceType.description %>">
+		</div>
+		<button class="ui primary button" type="submit">Lưu thông tin</button>
+		<a href="<%= @_url('admin.produce-type.list') %>">Quay lại</a>
+	</form>
+</div>

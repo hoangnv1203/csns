@@ -1,0 +1,117 @@
+<% extend 'admin/share/layout' %>
+
+<%
+	@pageTitle = 'Mẫu nông sản';
+
+	@backUrl = @_url('admin.produce.templates.list');
+
+	updateAction = @_url('admin.produce.templates.detail', {
+		id: @template._id
+	});
+
+	deleteAction = @_url('admin.produce.templates.delete', {
+		id: @template._id
+	});
+%>
+
+<% block 'breadcrumb' : %>
+	<div class="ui breadcrumb">
+		<a class="section" href="<%= @_url('admin.dashboard') %>">Admin</a>
+		<i class="right angle icon divider"></i>
+		<a class="section" href="<%= @_url('admin.produce.templates.list') %>"><%= @pageTitle %></a>
+		<i class="right angle icon divider"></i>
+		<div class="active section"><%= @template.name %></div>
+	</div>
+<% end %>
+
+<% block 'control-buttons' : %>
+	<div class="fitted down item">
+		<button class="circular ui icon primary button" type="submit" form="save-form">
+			<i class="save icon"></i>
+		</button>
+	</div>
+	<div class="fitted down item">
+		<a class="circular ui icon red button" href="<%= deleteAction %>">
+			<i class="trash outline icon"></i>
+		</a>
+	</div>
+<% end %>
+
+<% block 'mobile-control-buttons' : %>
+	<div class="item">
+		<a type="submit" form="save-form">
+			<i class="large save icon"></i>
+		</a>
+	</div>
+	<div class="item">
+		<a href="<%= deleteAction %>">
+			<i class="large trash outline icon"></i>
+		</a>
+	</div>
+<% end %>
+<div class="ui container">
+	<% if @success.length > 0 : %>
+		<div class="ui success message">
+			<i class="close icon"></i>
+			<div class="header"></div>
+			<% for message in @success : %>
+				<p><%= message %></p>
+			<% end %>
+		</div>
+	<% end %>
+	<form class="ui form" id="save-form" method="post" action="<%= updateAction %>">
+		<input type="hidden" id="tags" value="<%= @template.tags %>">
+		<div class="two fields">
+			<div class="required field">
+				<label>Tags</label>
+				<div class="ui fluid multiple search selection dropdown" id="select-tags">
+  					<input type="hidden" name="tags">
+  					<i class="dropdown icon"></i>
+					<div class="default text">Chọn tags</div>
+					<div class="menu">
+						<% for tag in @produceTags : %>
+							<div class="item" data-value="<%= tag._id %>"><i class="tag icon"></i><%= tag.name %></div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="two fields">
+			<div class="required field">
+				<label>Tên mẫu</label>
+				<input type="text" name="name" required value="<%= @template.name %>">
+			</div>
+		</div>
+		<div class="required field">
+			<label>Mô tả</label>
+			<input type="text" name="desc" required value="<%= @template.desc %>">
+		</div>
+
+		<div class="field">
+			<label>Hình ảnh</label>
+			<div class="ui basic segment">
+				<div class="ui tiny bordered image">
+					<img src="/images/produce-sample-draw.jpg">
+				</div>
+				<div class="ui tiny bordered image" style="text-align: center;">
+					<i class="big icon plus"></i>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<% block 'post-body' : %>
+	<script>
+		var tags = $('#tags').val();
+		tags = tags.split(',');
+
+		$('#select-tags')
+			.dropdown()
+			.dropdown('set selected', tags);
+
+		$('.close.icon')
+			.on('click', function() {
+				$(this).parent().transition('fade');
+			});
+	</script>
+<% end %>

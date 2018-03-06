@@ -1,0 +1,8 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+/node_modules
+/semantic/src
+/semantic/dist/components
+/semantic/tasks
+/semantic/gulpfile.js
+semantic.json
+
